@@ -42,10 +42,6 @@ Real-world scale: 21GB storage, ML-indexed photos, full video support.
 ![Tailscale Machines](tailscale-machines.png)
 3 devices (Linux Pi, iOS, Windows) securely connected via zero-trust VPN.
 
-### Nextcloud Desktop Sync
-![Nextcloud Sync](nextcloud-desktop-sync.png)
-Windows desktop syncing files two-way with the homelab (Desktop, Documents, Downloads).
-
 ## Automation & Proof
 
 ### Startup Script in Action
