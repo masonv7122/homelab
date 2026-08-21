@@ -1,6 +1,6 @@
 # Homelab: Self-Hosted Infrastructure & Cybersecurity Lab
 
-A self-hosted homelab built around a Raspberry Pi 5 (Docker host) and a dedicated virtualization server (Proxmox), running production-style infrastructure and an isolated cybersecurity attack/defense lab. Built by a Statistics major (Penn State) with a CompTIA Security+ certification, targeting help desk / IT support / junior security roles.
+A self-hosted homelab built around a Raspberry Pi 5 (Docker host) and a dedicated virtualization server (Proxmox), running production-style infrastructure and an isolated cybersecurity attack/defense lab. Built by a Penn State Statistics major with a CompTIA Security+ certification, targeting help desk / IT support / junior security roles.
 
 ## Network Architecture
 
@@ -75,20 +75,20 @@ LUKS-encrypted external SSD, 10+ containers, automated startup/shutdown.
 ## Roadmap
 
 **Done**
-- ✅ Nextcloud
-- ✅ Mini PC / Proxmox setup
-- ✅ pfSense (real router/firewall, TP-Link demoted to AP)
-- ✅ USB backup automation for Immich
-- ✅ Cybersecurity Lab - Kali + Metasploitable2 + Wazuh Manager, isolated on their own virtual network
+-  Nextcloud
+-  Mini PC / Proxmox setup
+-  pfSense (real router/firewall, TP-Link demoted to AP)
+-  USB backup automation for Immich
+-  Cybersecurity Lab - Kali + Metasploitable2 + Wazuh Manager, isolated on their own virtual network
 
 **Planned**
-- ⬜ Dual-boot main laptop with Debian + Windows (interacting with Proxmox VMs via noVNC)
-- ⬜ VLANs (pfSense + Netgear managed switch)
-- ⬜ Yubikey hardware 2FA
-- ⬜ Fix gluetun crash loop, then Mullvad VPN kill switch
-- ⬜ Jellyfin + *arr stack (tunneled through gluetun)
-- ⬜ Grafana + rack-mounted LCD dashboard
-- ⬜ Ollama/AI node
+-  Dual-boot main laptop with Debian + Windows (interacting with Proxmox VMs via noVNC)
+-  VLANs (pfSense + Netgear managed switch)
+-  Yubikey hardware 2FA
+-  Fix gluetun crash loop, then Mullvad VPN kill switch
+-  Jellyfin + *arr stack (tunneled through gluetun)
+-  Grafana + rack-mounted LCD dashboard
+-  Ollama/AI node
 
 ---
 
