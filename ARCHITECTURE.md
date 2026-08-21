@@ -66,6 +66,3 @@ Fully automated, hands-off backup path:
 3. The script mounts the drive, rsyncs the Immich data directory to it, logs progress, and auto-unmounts when finished.
 4. Log is checked for a "Backup finished, unmounting" line before physically unplugging the drive.
 
-## Git/Commit Policy
-
-All commits use my own git identity - no AI co-authorship or "generated with" attribution anywhere in this repo.
