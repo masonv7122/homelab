@@ -28,7 +28,7 @@ Rather than fighting infrastructure that isn't built for this use case, the lab 
 
 ## Exercises Log
 
-A running log of exercises run against Metasploitable2 from Kali. I'll add entries here myself as I go.
+A running log of exercises run against Metasploitable2 from Kali. I'll add entries here of what I have done as I go.
 
 | Date | Tool(s) | Target | What I Found / Learned |
 |---|---|---|---|
