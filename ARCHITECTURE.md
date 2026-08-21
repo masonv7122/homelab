@@ -64,5 +64,6 @@ Fully automated, hands-off backup path:
 1. Plug the designated backup USB drive (ext4) into the Pi.
 2. A udev rule detects the drive and triggers a backup script via `systemd-run --no-block`. This is the key detail - udev has a ~2 minute process timeout, which was killing long-running rsync jobs before the fix; `systemd-run --no-block` hands the job off outside of udev's timeout window.
 3. The script mounts the drive, rsyncs the Immich data directory to it, logs progress, and auto-unmounts when finished.
-4. Log is checked for a "Backup finished, unmounting" line before physically unplugging the drive.
+4. Script gets around 1gb every 70 seconds, so the process is usually 40-50 minutes. Repeat 1-2 times a week to prevent unexpected corruption or data loss.
+5. Log is checked for a "Backup finished, unmounting" line before physically unplugging the drive.
 
