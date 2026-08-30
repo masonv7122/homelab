@@ -1,0 +1,23 @@
+services:
+  gluetun:
+    image: qmcgaw/gluetun:latest
+    container_name: gluetun
+    cap_add:
+      - NET_ADMIN
+    environment:
+      - VPN_SERVICE_PROVIDER=mullvad
+      - VPN_TYPE=wireguard
+      - WIREGUARD_PRIVATE_KEY=YOUR_WIREGUARD_PRIVATE_KEY
+      - MULLVAD_ACCOUNT_NUMBER=YOUR_MULLVAD_ACCOUNT_NUMBER
+    ports:
+      - "8888:8888/tcp"
+      - "8888:8888/udp"
+    volumes:
+      - /mnt/data/mullvad:/gluetun
+    restart: unless-stopped
+    networks:
+      - homelab
+
+networks:
+  homelab:
+    driver: bridge
