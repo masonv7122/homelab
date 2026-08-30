@@ -1,0 +1,26 @@
+services:
+  vaultwarden:
+    image: vaultwarden/server:latest
+    container_name: vaultwarden
+    restart: unless-stopped
+    volumes:
+      - /mnt/data/vaultwarden/data:/data
+    ports:
+      - 8080:80
+
+  nginx-proxy-manager:
+    image: jc21/nginx-proxy-manager:latest
+    container_name: nginx-proxy-manager
+    restart: unless-stopped
+    ports:
+      - 80:80
+      - 443:443
+      - 81:81
+    volumes:
+      - /mnt/data/nginx/data:/data
+      - /mnt/data/nginx/letsencrypt:/etc/letsencrypt
+    environment:
+      - DISABLE_IPV6=true
+    dns:
+      - YOUR_LOCAL_DNS_IP
+      - 1.1.1.1
