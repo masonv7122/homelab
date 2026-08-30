@@ -1,0 +1,1 @@
+SUBSYSTEM=="block", ACTION=="add", ENV{ID_FS_UUID}=="YOUR_BACKUP_DRIVE_UUID", RUN+="/usr/bin/systemd-run --no-block /usr/local/bin/immich-backup-trigger.sh"
