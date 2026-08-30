@@ -1,0 +1,16 @@
+services:
+  pihole:
+    image: pihole/pihole:latest
+    container_name: pihole
+    restart: unless-stopped
+    hostname: pihole
+    network_mode: host
+    environment:
+      TZ: "America/New_York"
+      WEBPASSWORD: "YOUR_PIHOLE_PASSWORD"
+      FTLCONF_webserver_port: 8053
+    volumes:
+      - /mnt/data/pihole/etc-pihole:/etc/pihole
+      - /mnt/data/pihole/etc-dnsmasq.d:/etc/dnsmasq.d
+    cap_add:
+      - NET_ADMIN
