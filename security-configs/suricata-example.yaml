@@ -1,0 +1,301 @@
+# Sanitized excerpt from the Suricata configuration used on pfSense
+# in this homelab.
+#
+# IP addresses, IPv6 addresses, network ranges, interface names,
+# and instance-specific identifiers have been removed or replaced.
+
+stats:
+  enabled: no
+  interval: 10
+  decoder-events: true
+  decoder-events-prefix: "decoder.event"
+  stream-events: false
+
+# Configure alert and event logging.
+outputs:
+
+  # pfSense alert-pf blocking integration
+  - alert-pf:
+      enabled: no
+      kill-state: yes
+      block-drops-only: no
+      pass-list: /usr/local/etc/suricata/SURICATA_INSTANCE/passlist
+      block-ip: BOTH
+      pf-table: snort2c
+      passlist-debugging: no
+
+  # Line-based alert log
+  - fast:
+      enabled: yes
+      filename: alerts.log
+      append: yes
+      filetype: regular
+
+  # HTTP logging
+  - http-log:
+      enabled: yes
+      filename: http.log
+      filetype: regular
+      append: yes
+      extended: yes
+
+  # Optional packet capture
+  - pcap-log:
+      enabled: no
+      filename: log.pcap
+      dir: /
+      limit: 32mb
+      max-files: 100
+      mode: normal
+      compression: none
+      ts-format: sec
+      use-stream-depth: no
+      honor-pass-rules: no
+      conditional: alerts
+
+  # TLS logging
+  - tls-log:
+      enabled: no
+      filename: tls.log
+      filetype: regular
+      append: yes
+      extended: yes
+      session-resumption: no
+
+# Detection engine configuration
+detect-engine:
+  - profile: medium
+  - sgh-mpm-context: auto
+  - inspection-recursion-limit: 3000
+  - delayed-detect: no
+
+# Flow management
+flow:
+  memcap: 134217728
+  memcap-policy: ignore
+  hash-size: 65536
+  prealloc: 10000
+  emergency-recovery: 30
+  prune-flows: 5
+
+flow-timeouts:
+  default:
+    new: 30
+    established: 300
+    closed: 0
+    emergency-new: 10
+    emergency-established: 100
+    emergency-closed: 0
+
+  tcp:
+    new: 60
+    established: 3600
+    closed: 120
+    emergency-new: 10
+    emergency-established: 300
+    emergency-closed: 20
+
+  udp:
+    new: 30
+    established: 300
+    emergency-new: 10
+    emergency-established: 100
+
+  icmp:
+    new: 30
+    established: 300
+    emergency-new: 10
+    emergency-established: 100
+
+# TCP stream inspection
+stream:
+  memcap: 268435456
+  memcap-policy: ignore
+  checksum-validation: no
+  inline: auto
+  prealloc-sessions: 32768
+  midstream: false
+  midstream-policy: ignore
+  async-oneside: false
+  max-synack-queued: 5
+  bypass: no
+  drop-invalid: no
+
+  reassembly:
+    memcap: 131217728
+    memcap-policy: ignore
+    depth: 1048576
+    toserver-chunk-size: 2560
+    toclient-chunk-size: 2560
+
+# Host tracking
+host:
+  hash-size: 4096
+  prealloc: 1000
+  memcap: 33554432
+
+# Host OS policy
+host-os-policy:
+  bsd: [YOUR_HOME_NETWORK_CIDR]
+
+# Suricata operational logging
+logging:
+  default-log-level: info
+  default-log-format: "%t - <%d> -- "
+
+  outputs:
+    - console:
+        enabled: yes
+
+    - file:
+        enabled: yes
+        filename: /var/log/suricata/SURICATA_INSTANCE/suricata.log
+
+    - syslog:
+        enabled: no
+        facility: local1
+        level: notice
+        format: "[%i] <%d> -- "
+
+# Packet capture interface
+pcap:
+  - interface: YOUR_INTERFACE
+    checksum-checks: auto
+    promisc: yes
+    snaplen: 1518
+
+legacy:
+  uricontent: enabled
+
+# Rules
+default-rule-path: /usr/local/etc/suricata/SURICATA_INSTANCE/rules
+
+rule-files:
+  - suricata.rules
+
+classification-file: /usr/local/etc/suricata/SURICATA_INSTANCE/classification.config
+reference-config-file: /usr/local/etc/suricata/SURICATA_INSTANCE/reference.config
+
+# Network variables
+vars:
+
+  address-groups:
+    HOME_NET: "[YOUR_HOME_NETWORK_CIDR, YOUR_IPV6_NETWORK_CIDR]"
+    EXTERNAL_NET: "[!$HOME_NET]"
+
+    DNS_SERVERS: "$HOME_NET"
+    SMTP_SERVERS: "$HOME_NET"
+    HTTP_SERVERS: "$HOME_NET"
+    SQL_SERVERS: "$HOME_NET"
+    TELNET_SERVERS: "$HOME_NET"
+    DNP3_SERVER: "$HOME_NET"
+    DNP3_CLIENT: "$HOME_NET"
+    MODBUS_SERVER: "$HOME_NET"
+    MODBUS_CLIENT: "$HOME_NET"
+    ENIP_SERVER: "$HOME_NET"
+    ENIP_CLIENT: "$HOME_NET"
+    FTP_SERVERS: "$HOME_NET"
+    SSH_SERVERS: "$HOME_NET"
+    AIM_SERVERS: "YOUR_AIM_SERVER_NETWORKS"
+    SIP_SERVERS: "$HOME_NET"
+
+  port-groups:
+    FTP_PORTS: "21"
+    HTTP_PORTS: "80"
+    ORACLE_PORTS: "1521"
+    SSH_PORTS: "22"
+    SHELLCODE_PORTS: "!80"
+    DNP3_PORTS: "20000"
+    FILE_DATA_PORTS: "$HTTP_PORTS, 110, 143"
+    SIP_PORTS: "5060, 5061, 5600"
+
+# Application-layer protocol inspection
+app-layer:
+  error-policy: ignore
+
+  protocols:
+
+    bittorrent-dht:
+      enabled: yes
+
+    dcerpc:
+      enabled: yes
+
+    dhcp:
+      enabled: yes
+
+    dnp3:
+      enabled: yes
+      detection-ports:
+        dp: 20000
+
+    dns:
+      global-memcap: 16777216
+      state-memcap: 524288
+      request-flood: 500
+
+      tcp:
+        enabled: yes
+        detection-ports:
+          dp: 53
+
+      udp:
+        enabled: yes
+        detection-ports:
+          dp: 53
+
+    enip:
+      enabled: yes
+
+    ftp:
+      enabled: yes
+
+    ftp-data:
+      enabled: yes
+
+    http:
+      enabled: yes
+      memcap: 67108864
+
+    http2:
+      enabled: yes
+
+    ike:
+      enabled: yes
+
+    imap:
+      enabled: detection-only
+
+    krb5:
+      enabled: yes
+
+    modbus:
+      enabled: yes
+      request-flood: 500
+      detection-ports:
+        dp: 502
+      stream-depth: 0
+
+    mqtt:
+      enabled: yes
+
+    msn:
+      enabled: detection-only
+
+    nfs:
+      enabled: yes
+
+    ntp:
+      enabled: yes
+
+    pgsql:
+      enabled: no
+
+    quic:
+      enabled: yes
+
+    rdp:
+      enabled: yes
+
+    rfb:
+      enabled: yes
