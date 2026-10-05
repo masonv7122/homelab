@@ -106,6 +106,18 @@ LUKS unlock, storage mount, and all 11 containers starting automatically in ~30 
 
 The physical stack: TP-Link access point on top, Netgear managed switch, and the Lenovo ThinkCentre M710q (Proxmox host) below it.
 
+### vsftpd Backdoor Trigger
+
+[![vsftpd Backdoor](https://github.com/masonv7122/homelab/raw/main/images/vsftpd.png)](/masonv7122/homelab/blob/main/images/vsftpd.png)
+
+Manually triggering the vsftpd 2.3.4 backdoor via netcat, a smiley-face string in the FTP username field is all it takes to open a root shell listener on port 6200.
+
+### Root Shell via Netcat
+
+[![Netcat Root Shell](https://github.com/masonv7122/homelab/raw/main/images/ncwhoami.png)](/masonv7122/homelab/blob/main/images/ncwhoami.png)
+
+Connecting to the resulting port 6200 listener with netcat and confirming root access, no credentials required.
+
 ---
 
 **All images show real, working infrastructure.** Everything runs 24/7.
