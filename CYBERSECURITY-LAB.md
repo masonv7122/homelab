@@ -33,4 +33,5 @@ A running log of exercises run against Metasploitable2 from Kali. I'll add entri
 | Date | Tool(s) | Target | What I Found / Learned |
 |---|---|---|---|
 | 2026-08-30 | Nmap | Metasploitable2 (`10.10.10.20`) | Ran `sudo nmap -sV -O 10.10.10.20` and identified 23 open TCP ports, including FTP, SSH, Telnet, HTTP, SMB, MySQL, PostgreSQL, VNC, IRC, and Tomcat services. Learned how service/version detection and OS fingerprinting can reveal a system's attack surface and help identify outdated or unnecessary services that should be patched, restricted, or disabled. |
+| 2026-10-05 | netcat (manual) | Metasploitable2 (vsftpd 2.3.4) | Exploited the vsftpd backdoor by hand instead of using the Metasploit module — sent a `:)` trigger string via netcat on port 21, then connected to the resulting root shell on port 6200 and confirmed access with `whoami`. |
 
